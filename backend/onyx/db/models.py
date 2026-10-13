@@ -6217,6 +6217,10 @@ class DocPermissionSyncAttempt(Base):
     time_finished: Mapped[datetime.datetime | None] = mapped_column(
         DateTime(timezone=True), default=None
     )
+    # Lease renewed by the running worker; the reaper fails the attempt when it expires
+    heartbeat_at: Mapped[datetime.datetime | None] = mapped_column(
+        DateTime(timezone=True), default=None
+    )
 
     # Relationships
     connector_credential_pair: Mapped[ConnectorCredentialPair] = relationship(
@@ -6285,6 +6289,10 @@ class ExternalGroupPermissionSyncAttempt(Base):
         DateTime(timezone=True), default=None
     )
     time_finished: Mapped[datetime.datetime | None] = mapped_column(
+        DateTime(timezone=True), default=None
+    )
+    # Lease renewed by the running worker; the reaper fails the attempt when it expires
+    heartbeat_at: Mapped[datetime.datetime | None] = mapped_column(
         DateTime(timezone=True), default=None
     )
 
